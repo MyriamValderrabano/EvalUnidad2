@@ -296,8 +296,38 @@
 
    <div class="p-4 sm:ml-64">
       <router-view/>
+     <foot>
+
+     </foot> 
       
      
 </div>
 
 </template>
+
+<script>
+import Foot from './Pie-Pagina.vue'
+export default {
+   components:{
+      Foot
+   }
+}
+
+
+</script>
+<style>
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px; /* Ajusta los márgenes a los lados y abajo */
+  box-sizing: border-box;
+  z-index: 1000; /* Índice de apilamiento alto */
+}
+</style>
