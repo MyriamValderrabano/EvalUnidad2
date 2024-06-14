@@ -296,5 +296,8 @@
 
    <div class="p-4 sm:ml-64">
       <router-view/>
+      
      
-</div></template>
+</div>
+
+</template>
