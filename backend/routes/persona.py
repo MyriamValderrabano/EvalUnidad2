@@ -37,8 +37,16 @@ def savePersonas(datos_persona:model_personas):
 def updatePersonas(persona_id: int, datos_persona: model_personas):
     for index, persona in enumerate(personas):
         if persona.id == persona_id:
-            datos_persona.id=persona.id
-            personas[index] = datos_persona
+            # Actualizar solo los campos modificables
+            persona.nombre = datos_persona.nombre
+            persona.primer_apellido = datos_persona.primer_apellido
+            persona.segundo_apellido = datos_persona.segundo_apellido
+            persona.edad = datos_persona.edad
+            persona.fecha_nacimiento = datos_persona.fecha_nacimiento
+            persona.curp = datos_persona.curp
+            persona.tipo_sangre = datos_persona.tipo_sangre
+            persona.created_at = datos_persona.created_at
+            persona.estatus = datos_persona.estatus
             return "Datos actualizados correctamente"
 
 @persona.delete("/personas/{persona_id}")
@@ -49,7 +57,7 @@ def deletePersonas(persona_id: int):
             return "Datos eliminados correctamente"
 
 @persona.get("/personas/{persona_id}")
-def get_Personas(persona_id: int):
+def searchPersonas(persona_id: int):
     for persona in personas:
         if persona.id == persona_id:
             return persona
