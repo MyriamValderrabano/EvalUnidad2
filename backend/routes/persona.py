@@ -18,17 +18,38 @@ class model_personas(BaseModel):
     estatus: bool = False
 
 
-@persona.get("/")
 
+@persona.get('/')
 def bienvenida():
-    return "Bienvenido a la API del sistema"
+    return "Bienvenido al api del sistema"
 
-@persona.get('/personas')
-
+@persona.get("/personas")
 def get_personas():
     return personas
 
-@persona.post('/personas')
-def save_personas(datos_persona:model_personas):
+@persona.post("/personas")
+def savePersonas(datos_persona:model_personas):
     personas.append(datos_persona)
     return "Datos guardados correctamente"
+
+
+@persona.put("/personas/{persona_id}")
+def updatePersonas(persona_id: int, datos_persona: model_personas):
+    for index, persona in enumerate(personas):
+        if persona.id == persona_id:
+            datos_persona.id=persona.id
+            personas[index] = datos_persona
+            return "Datos actualizados correctamente"
+
+@persona.delete("/personas/{persona_id}")
+def deletePersonas(persona_id: int):
+    for index, persona in enumerate(personas):
+        if persona.id == persona_id:
+            del personas[index]
+            return "Datos eliminados correctamente"
+
+@persona.get("/personas/{persona_id}")
+def get_Personas(persona_id: int):
+    for persona in personas:
+        if persona.id == persona_id:
+            return persona
