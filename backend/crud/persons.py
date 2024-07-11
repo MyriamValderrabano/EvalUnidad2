@@ -12,7 +12,7 @@ def get_persons(db: Session, skip:int=0,limit:int=10):
     return db.query(models.persons.Person).offset(skip).limit(limit).all()
 
 def create_person(db: Session, person:schemas.persons.PersonCreate):
-    db_person = models.persons.Person(nombre=person.nombre, primer_apellido=person.primer_apellido, segundo_apellido=person.segundo_apellido,curp=person.curp,genero=person.genero,sangre=person.sangre,fecha_nacimiento=person.fecha_nacimiento,telefono=person.telefono,correo_electronico=person.correo_electronico,created_at=person.created_at, estatus=person.estatus)
+    db_person = models.persons.Person(titulo=person.titulo,nombre=person.nombre, primer_apellido=person.primer_apellido, segundo_apellido=person.segundo_apellido,curp=person.curp,genero=person.genero,sangre=person.sangre,fecha_nacimiento=person.fecha_nacimiento,fotografia=person.fotografia,telefono=person.telefono,correo_electronico=person.correo_electronico,created_at=person.created_at, estatus=person.estatus)
     db.add(db_person)
     db.commit()
     db.refresh(db_person)

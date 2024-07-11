@@ -7,6 +7,7 @@ class Person(Base):
     __tablename__ = "persons"
     
     id = Column(Integer, primary_key=True, index=True)
+    titulo_cortesia= Column(String(255))
     nombre = Column(String(255))
     primer_apellido = Column(String(255))
     segundo_apellido = Column(String(255))
@@ -14,6 +15,7 @@ class Person(Base):
     genero = Column(String(18))  
     sangre = Column(String(10))  
     fecha_nacimiento = Column(DateTime)
+    fotografia= Column(String(255))
     telefono = Column(String(20)) 
     correo_electronico = Column(String(255))
     created_at = Column(DateTime)
