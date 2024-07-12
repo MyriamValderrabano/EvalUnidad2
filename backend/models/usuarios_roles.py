@@ -3,13 +3,16 @@ from sqlalchemy.dialects.mysql import LONGTEXT
 from sqlalchemy.orm import relationship
 from config.db import Base
 
-class Usuario_Rol(Base):
-    __tablename__ = "usuarios_roles"
+import models.users, models.roles
+
+class UserRol(Base):
+    __tablename__ = "tbd_usuarios_roles"
+
+    Usuario_ID = Column(Integer, ForeignKey("tbb_usuarios.ID"), primary_key=True)
+    Rol_ID = Column(Integer, ForeignKey("tbc_roles.ID"), primary_key=True)
+    Estatus = Column(Boolean)
+    Fecha_Registro = Column(DateTime)
+    Fecha_Actualizacion = Column(DateTime)
     
-    id=Column(Integer, primary_key=True, index=True)
-    usuario_id = Column(Integer, index=True)
-    rol_id = Column(Integer ,index=True)
-    created_at = Column(DateTime)
-    estatus = Column(Boolean, default=False)
-    fecha_actualizacion= Column(DateTime)
+    
     

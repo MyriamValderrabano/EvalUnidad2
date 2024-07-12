@@ -4,11 +4,11 @@ from sqlalchemy.orm import relationship
 from config.db import Base
 
 class Rol(Base):
-    __tablename__ = "roles"
+    __tablename__ = "tbc_roles"
     
-    id = Column(Integer, primary_key=True, index=True)
-    nombre = Column(String(255))
-    descripcion = Column(String(255))
-    created_at = Column(DateTime)
-    estatus = Column(Boolean, default=False)
+    ID = Column(Integer, primary_key=True, index=True)
+    Nombre = Column(String(255))
+    Descripcion = Column(String(255))
+    Created_at = Column(DateTime)
+    Estatus = Column(Boolean, default=False)
     

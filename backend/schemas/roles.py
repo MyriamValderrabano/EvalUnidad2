@@ -3,10 +3,10 @@ from pydantic import BaseModel
 from datetime import datetime
 
 class RolBase(BaseModel):
-    nombre: str
-    descripcion: str
-    created_at:datetime
-    estatus:bool
+    Nombre: str
+    Descripcion: str
+    Created_at:datetime
+    Estatus:bool
     
     
 class RolCreate(RolBase):
@@ -14,7 +14,7 @@ class RolCreate(RolBase):
 class RolUpdate(RolBase):
     pass
 class Rol(RolBase):
-    id:int
+    ID:int
     #owner_id:int clave foranea
     
     class Config:
