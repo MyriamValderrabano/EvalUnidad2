@@ -1,7 +1,9 @@
 from fastapi import APIRouter,HTTPException,Depends,Request
 from sqlalchemy.orm import Session
+from portadortoken import Portador
 import crud.users,config.db,schemas.users,models.users
 from typing import List
+from jwt_config import solicita_token
 
 user = APIRouter()
 
@@ -46,3 +48,12 @@ def delete_user(id: int, db: Session = Depends(get_db)):
     if db_user is None:
         raise HTTPException(status_code=404, detail="Usuario no existe, no se pudo eliminar")
     return db_user
+
+@user.post("/login/", response_model=schemas.users.User, tags=["Usuarios"],dependencies=[Depends(Portador())])
+def read_credentials(user:schemas.users.UserLogin,db: Session = Depends(get_db)):
+    db_credentials = crud.users.get_user_by_credentials(db,usuario=user.Nombre_Usuario,Correo_Electronico=user.Correo_Electronico,Telefono=user.Numero_Telefonico_Movil,password=user.Contrasena)
+    if db_credentials is None:
+        return JSONResponse(content={'mensaje':'Acceso Denegado'}, status_code=404)
+    token: str = solicita_token(user.dict())
+    return  JSONResponse(status_code=200, content= token)
+    
