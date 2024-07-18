@@ -9,10 +9,10 @@ def get_user(db: Session, id: int):
 def get_user_by_usuario(db: Session, usuario: str):
     return db.query(models.users.User).filter(models.users.User.Nombre_Usuario == usuario).first()
 
-def get_user_by_credentials(db: Session, usuario: str,Correo_Electronico:str, telefono:str, password):
+def get_user_by_credentials(db: Session, usuario: str,Correo_Electronico:str, Telefono:str, password):
     return db.query(models.users.User).filter((models.users.User.Nombre_Usuario == usuario) |
                                               (models.users.User.Correo_Electronico==Correo_Electronico) |
-                                              (models.users.User.Numero_Telefonico_Movil==telefono),
+                                              (models.users.User.Numero_Telefonico_Movil==Telefono),
                                               models.users.User.Contrasena==password).first()
 
 def get_users(db: Session, skip: int = 0, limit: int = 10):

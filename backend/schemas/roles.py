@@ -5,8 +5,9 @@ from datetime import datetime
 class RolBase(BaseModel):
     Nombre: str
     Descripcion: str
-    Created_at:datetime
     Estatus:bool
+    Fecha_Registro: datetime
+    Fecha_Actualizacion: datetime
     
     
 class RolCreate(RolBase):

@@ -12,7 +12,7 @@ def get_rol(db: Session, skip:int=0,limit:int=10):
     return db.query(models.roles.Rol).offset(skip).limit(limit).all()
 
 def create_rol(db: Session, rol:schemas.roles.RolCreate):
-    db_rol = models.roles.Rol(Nombre=rol.Nombre, Descripcion=rol.Descripcion,Created_at=rol.Created_at, Estatus=rol.Estatus)
+    db_rol = models.roles.Rol(Nombre=rol.Nombre, Descripcion=rol.Descripcion, Estatus=rol.Estatus, Fecha_Registro=rol.Fecha_Registro,Fecha_Actualizacion=rol.Fecha_Actualizacion )
     db.add(db_rol)
     db.commit()
     db.refresh(db_rol)

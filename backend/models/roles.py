@@ -9,6 +9,7 @@ class Rol(Base):
     ID = Column(Integer, primary_key=True, index=True)
     Nombre = Column(String(255))
     Descripcion = Column(String(255))
-    Created_at = Column(DateTime)
     Estatus = Column(Boolean, default=False)
+    Fecha_Registro = Column(DateTime)
+    Fecha_Actualizacion = Column(DateTime)
     
