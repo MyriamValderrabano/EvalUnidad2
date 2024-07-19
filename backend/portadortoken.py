@@ -19,7 +19,7 @@ class Portador(HTTPBearer):
     async def __call__(self, request: Request, db:Session=Depends(get_db)):
         autorizacion=await super().__call__(request)
         dato=valida_token(autorizacion.credentials)
-        db_userLgin=crud.users.get_user_by_credentials(db,usuario=dato["Nombre_Usuario"],Correo_Electronico=dato["Correo_Electronico"],telefono=dato["Numero_Telefonico_Movil"], password=dato["Contraseña"])
+        db_userLgin=crud.users.get_user_by_credentials(db,usuario=dato["Nombre_Usuario"],Correo_Electronico=dato["Correo_Electronico"],Telefono=dato["Numero_Telefonico_Movil"], password=dato["Contrasena"])
         if db_userLgin is None:
             raise HTTPException(status_code=404, detail="Login Incorrecto")
         print(db_userLgin)

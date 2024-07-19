@@ -6,5 +6,5 @@ def solicita_token(dato:dict)->str:
     return token
 
 def valida_token(token:str)->dict:
-    dato:dict = decode(token,key='mi-clave', algorithm=['HS256'])
+    dato:dict = decode(token,key='mi-clave', algorithms=['HS256'])
     return dato
