@@ -23,6 +23,8 @@
             <th scope="col" class="px-6 py-3">Costo Total</th>
             <th scope="col" class="px-6 py-3">Cantidad</th>
             <th scope="col" class="px-6 py-3">Ubicación</th>
+            <th scope="col" class="px-6 py-3">Fecha de Registro</th>
+            <th scope="col" class="px-6 py-3">Fecha de Actualización</th>
             <th scope="col" class="px-6 py-3 text-center">Acciones</th>
           </tr>
         </thead>
@@ -71,6 +73,15 @@
               <input v-else v-model="item.ubicacion" type="text" class="w-full border p-1 rounded" />
             </td>
             
+            <td class="px-6 py-4">
+              <span>{{ new Date(item.fechaRegistro).toLocaleString() }}</span>
+            </td>
+            
+            <td class="px-6 py-4">
+              <span v-if="!item.editing">{{ new Date(item.fechaActualizacion).toLocaleString() }}</span>
+              <span v-else>{{ new Date().toLocaleString() }}</span>
+            </td>
+            
             <td class="px-6 py-4 text-center">
               <a href="#" v-if="!item.editing" @click.prevent="editItem(item)" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</a>
               <a href="#" v-if="!item.editing" @click.prevent="deleteItem(item.id)" class="font-medium text-red-600 dark:text-red-500 hover:underline ml-2">Eliminar</a>
@@ -89,46 +100,39 @@ export default {
   data() {
     return {
       medicamentos: [
-        { id: 1, nombre: 'Paracetamol', personalMedico: 'Dr. Smith', clave: 'M123', estatus: 'Reservado', costoTotal: 100.00, cantidad: 200, ubicacion: 'Almacén 1', editing: false },
-        { id: 2, nombre: 'Ibuprofeno', personalMedico: 'Dra. García', clave: 'M456', estatus: 'En transito', costoTotal: 150.00, cantidad: 300, ubicacion: 'Almacén 2', editing: false },
-        { id: 3, nombre: 'Amoxicilina', personalMedico: 'Dr. López', clave: 'M789', estatus: 'Recibido', costoTotal: 200.00, cantidad: 500, ubicacion: 'Almacén 3', editing: false },
-        { id: 4, nombre: 'Cetirizina', personalMedico: 'Dra. Hernández', clave: 'M321', estatus: 'Rechazado', costoTotal: 80.00, cantidad: 150, ubicacion: 'Almacén 4', editing: false }
+        { id: 1, nombre: 'Paracetamol', personalMedico: 'Dr. Smith', clave: 'M123', estatus: 'Reservado', costoTotal: 100.00, cantidad: 200, ubicacion: 'Almacén 1', fechaRegistro: new Date().toISOString(), fechaActualizacion: new Date().toISOString(), editing: false },
+        { id: 2, nombre: 'Ibuprofeno', personalMedico: 'Dra. García', clave: 'M456', estatus: 'En transito', costoTotal: 150.00, cantidad: 300, ubicacion: 'Almacén 2', fechaRegistro: new Date().toISOString(), fechaActualizacion: new Date().toISOString(), editing: false },
+        { id: 3, nombre: 'Amoxicilina', personalMedico: 'Dr. López', clave: 'M789', estatus: 'Recibido', costoTotal: 200.00, cantidad: 500, ubicacion: 'Almacén 3', fechaRegistro: new Date().toISOString(), fechaActualizacion: new Date().toISOString(), editing: false },
+        { id: 4, nombre: 'Cetirizina', personalMedico: 'Dra. Hernández', clave: 'M321', estatus: 'Rechazado', costoTotal: 80.00, cantidad: 150, ubicacion: 'Almacén 4', fechaRegistro: new Date().toISOString(), fechaActualizacion: new Date().toISOString(), editing: false }
       ]
     };
   },
   methods: {
     getRowClass(item) {
       return {
-        'odd:bg-white odd:dark:bg-gray-900': true,
-        'even:bg-gray-50 even:dark:bg-gray-800': true,
-        'border-b dark:border-gray-700': true,
-        'bg-gray-200': item.editing // Highlight the row being edited
+        'bg-gray-100 dark:bg-gray-800': item.editing
       };
+    },
+    changeValue(item, field, delta) {
+      item[field] = Math.max(0, item[field] + delta);
     },
     editItem(item) {
       item.editing = true;
     },
     saveItem(item) {
       item.editing = false;
-      // Aquí podrías añadir lógica para guardar los cambios si es necesario
+      item.fechaActualizacion = new Date().toISOString(); // Update the fechaActualizacion on save
     },
     cancelEdit(item) {
       item.editing = false;
-      // Opcional: Restaurar el valor original si es necesario
     },
     deleteItem(id) {
       this.medicamentos = this.medicamentos.filter(item => item.id !== id);
-    },
-    changeValue(item, field, delta) {
-      if (item.editing) {
-        // Actualiza el valor del campo especificado con el incremento o decremento dado
-        item[field] = parseFloat((item[field] + delta).toFixed(2));
-      }
     }
   }
 };
 </script>
 
 <style scoped>
-/* Agrega estilos específicos para el componente si es necesario */
+/* Add your custom styles here */
 </style>
