@@ -109,10 +109,8 @@ export default {
       try {
         const response = await axios.post('http://127.0.0.1:8000/lotes/', this.form);
         console.log('Lote creado:', response.data);
-        // Aquí puedes agregar lógica adicional como redirigir al usuario o mostrar un mensaje
       } catch (error) {
         console.error('Error al crear el lote:', error.response ? error.response.data : error.message);
-        // Maneja el error, por ejemplo, mostrando un mensaje al usuario
       }
     }
   }
@@ -120,5 +118,5 @@ export default {
 </script>
 
 <style scoped>
-/* Puedes agregar estilos aquí si es necesario */
+/*  Agregar estilos */
 </style>
