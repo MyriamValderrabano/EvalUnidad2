@@ -29,64 +29,60 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in medicamentos" :key="item.id" :class="getRowClass(item)">
-            <td class="px-6 py-4" :class="{'w-1/8': item.editing}">
-              <span v-if="!item.editing">{{ item.nombre }}</span>
-              <input v-else v-model="item.nombre" type="text" class="w-full border p-1 rounded" />
+          <tr v-for="item in medicamentos" :key="item.ID" :class="getRowClass(item)">
+            <td class="px-6 py-4">
+              <span v-if="!item.editing">{{ item.Medicamento_ID }}</span>
+              <input v-else v-model="item.Medicamento_ID" type="text" class="w-full border p-1 rounded" />
             </td>
-            
-            <td class="px-6 py-4" :class="{'w-1/8': item.editing}">
-              <span v-if="!item.editing">{{ item.personalMedico }}</span>
-              <input v-else v-model="item.personalMedico" type="text" class="w-full border p-1 rounded" />
+            <td class="px-6 py-4">
+              <span v-if="!item.editing">{{ item.Personal_Medico_ID }}</span>
+              <input v-else v-model="item.Personal_Medico_ID" type="text" class="w-full border p-1 rounded" />
             </td>
-            
-            <td class="px-6 py-4" :class="{'w-1/8': item.editing}">
-              <span v-if="!item.editing">{{ item.clave }}</span>
-              <input v-else v-model="item.clave" type="text" class="w-full border p-1 rounded" />
+            <td class="px-6 py-4">
+              <span v-if="!item.editing">{{ item.Clave }}</span>
+              <input v-else v-model="item.Clave" type="text" class="w-full border p-1 rounded" />
             </td>
-            
-            <td class="px-6 py-4" :class="{'w-1/8': item.editing}">
-              <span v-if="!item.editing">{{ item.estatus }}</span>
-              <input v-else v-model="item.estatus" type="text" class="w-full border p-1 rounded" />
+            <td class="px-6 py-4">
+              <span v-if="!item.editing">{{ item.Estatus }}</span>
+              <select v-else v-model="item.Estatus" class="w-full border p-1 rounded">
+                <option value="Reservado">Reservado</option>
+                <option value="En_transito">En transito</option>
+                <option value="Recibido">Recibido</option>
+                <option value="Rechazado">Rechazado</option>
+              </select>
             </td>
-            
-            <td class="px-6 py-4" :class="{'w-1/8': item.editing}">
-              <span v-if="!item.editing">${{ item.costoTotal }}</span>
+            <td class="px-6 py-4">
+              <span v-if="!item.editing">${{ item.Costo_Total }}</span>
               <div v-else class="flex items-center">
-                <button @click="changeValue(item, 'costoTotal', -1)" class="px-2 py-1 border rounded-l bg-gray-200 hover:bg-gray-300">-</button>
-                <input v-model.number="item.costoTotal" type="number" step="0.01" min="0" class="w-20 px-2 py-1 border-t border-b text-center" />
-                <button @click="changeValue(item, 'costoTotal', 1)" class="px-2 py-1 border rounded-r bg-gray-200 hover:bg-gray-300">+</button>
+                <button @click="changeValue(item, 'Costo_Total', -1)" class="px-2 py-1 border rounded-l bg-gray-200 hover:bg-gray-300">-</button>
+                <input v-model.number="item.Costo_Total" type="number" step="0.01" min="0" class="w-20 px-2 py-1 border-t border-b text-center" />
+                <button @click="changeValue(item, 'Costo_Total', 1)" class="px-2 py-1 border rounded-r bg-gray-200 hover:bg-gray-300">+</button>
               </div>
             </td>
-            
-            <td class="px-6 py-4" :class="{'w-1/8': item.editing}">
-              <span v-if="!item.editing">{{ item.cantidad }}</span>
+            <td class="px-6 py-4">
+              <span v-if="!item.editing">{{ item.Cantidad }}</span>
               <div v-else class="flex items-center">
-                <button @click="changeValue(item, 'cantidad', -1)" class="px-2 py-1 border rounded-l bg-gray-200 hover:bg-gray-300">-</button>
-                <input v-model.number="item.cantidad" type="number" min="0" class="w-20 px-2 py-1 border-t border-b text-center" />
-                <button @click="changeValue(item, 'cantidad', 1)" class="px-2 py-1 border rounded-r bg-gray-200 hover:bg-gray-300">+</button>
+                <button @click="changeValue(item, 'Cantidad', -1)" class="px-2 py-1 border rounded-l bg-gray-200 hover:bg-gray-300">-</button>
+                <input v-model.number="item.Cantidad" type="number" min="0" class="w-20 px-2 py-1 border-t border-b text-center" />
+                <button @click="changeValue(item, 'Cantidad', 1)" class="px-2 py-1 border rounded-r bg-gray-200 hover:bg-gray-300">+</button>
               </div>
             </td>
-            
-            <td class="px-6 py-4" :class="{'w-1/8': item.editing}">
-              <span v-if="!item.editing">{{ item.ubicacion }}</span>
-              <input v-else v-model="item.ubicacion" type="text" class="w-full border p-1 rounded" />
-            </td>
-            
             <td class="px-6 py-4">
-              <span>{{ new Date(item.fechaRegistro).toLocaleString() }}</span>
+              <span v-if="!item.editing">{{ item.Ubicacion }}</span>
+              <input v-else v-model="item.Ubicacion" type="text" class="w-full border p-1 rounded" />
             </td>
-            
             <td class="px-6 py-4">
-              <span v-if="!item.editing">{{ new Date(item.fechaActualizacion).toLocaleString() }}</span>
+              <span>{{ new Date(item.Fecha_Registro).toLocaleString() }}</span>
+            </td>
+            <td class="px-6 py-4">
+              <span v-if="!item.editing">{{ new Date(item.Fecha_Actualizacion).toLocaleString() }}</span>
               <span v-else>{{ new Date().toLocaleString() }}</span>
             </td>
-            
             <td class="px-6 py-4 text-center">
-              <a href="#" v-if="!item.editing" @click.prevent="editItem(item)" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</a>
-              <a href="#" v-if="!item.editing" @click.prevent="deleteItem(item.id)" class="font-medium text-red-600 dark:text-red-500 hover:underline ml-2">Eliminar</a>
-              <a href="#" v-if="item.editing" @click.prevent="saveItem(item)" class="font-medium text-green-600 dark:text-green-500 hover:underline ml-2">Guardar</a>
-              <a href="#" v-if="item.editing" @click.prevent="cancelEdit(item)" class="font-medium text-gray-600 dark:text-gray-500 hover:underline ml-2">Cancelar</a>
+              <a href="#" v-if="!item.editing" @click.prevent="editItem(item)" class="font-medium text-blue-600 hover:underline">Editar</a>
+              <a href="#" v-if="!item.editing" @click.prevent="deleteItem(item.ID)" class="font-medium text-red-600 hover:underline ml-2">Eliminar</a>
+              <a href="#" v-if="item.editing" @click.prevent="saveItem(item)" class="font-medium text-green-600 hover:underline ml-2">Guardar</a>
+              <a href="#" v-if="item.editing" @click.prevent="cancelEdit(item)" class="font-medium text-gray-600 hover:underline ml-2">Cancelar</a>
             </td>
           </tr>
         </tbody>
@@ -96,43 +92,74 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
-      medicamentos: [
-        { id: 1, nombre: 'Paracetamol', personalMedico: 'Dr. Smith', clave: 'M123', estatus: 'Reservado', costoTotal: 100.00, cantidad: 200, ubicacion: 'Almacén 1', fechaRegistro: new Date().toISOString(), fechaActualizacion: new Date().toISOString(), editing: false },
-        { id: 2, nombre: 'Ibuprofeno', personalMedico: 'Dra. García', clave: 'M456', estatus: 'En transito', costoTotal: 150.00, cantidad: 300, ubicacion: 'Almacén 2', fechaRegistro: new Date().toISOString(), fechaActualizacion: new Date().toISOString(), editing: false },
-        { id: 3, nombre: 'Amoxicilina', personalMedico: 'Dr. López', clave: 'M789', estatus: 'Recibido', costoTotal: 200.00, cantidad: 500, ubicacion: 'Almacén 3', fechaRegistro: new Date().toISOString(), fechaActualizacion: new Date().toISOString(), editing: false },
-        { id: 4, nombre: 'Cetirizina', personalMedico: 'Dra. Hernández', clave: 'M321', estatus: 'Rechazado', costoTotal: 80.00, cantidad: 150, ubicacion: 'Almacén 4', fechaRegistro: new Date().toISOString(), fechaActualizacion: new Date().toISOString(), editing: false }
-      ]
+      medicamentos: []
     };
   },
+  mounted() {
+    this.fetchMedicamentos();
+  },
   methods: {
+    async fetchMedicamentos() {
+      try {
+        const response = await axios.get('http://127.0.0.1:8000/lotes/');
+        this.medicamentos = response.data;
+      } catch (error) {
+        console.error('Error fetching lotes:', error);
+      }
+    },
     getRowClass(item) {
       return {
-        'bg-gray-100 dark:bg-gray-800': item.editing
+        'bg-gray-100 dark:bg-gray-800': item.editing,
+        'odd:bg-white odd:dark:bg-gray-900': !item.editing,
+        'even:bg-gray-50 even:dark:bg-gray-800': !item.editing,
+        'border-b dark:border-gray-700': !item.editing
       };
     },
     changeValue(item, field, delta) {
-      item[field] = Math.max(0, item[field] + delta);
+      if (item.editing) {
+        item[field] = Math.max(0, parseFloat((item[field] + delta).toFixed(2))); // Prevenir valores negativos
+      }
     },
     editItem(item) {
       item.editing = true;
     },
-    saveItem(item) {
+    async saveItem(item) {
       item.editing = false;
-      item.fechaActualizacion = new Date().toISOString(); // Update the fechaActualizacion on save
+      item.Fecha_Actualizacion = new Date().toISOString(); // Actualiza la fecha de modificación
+      try {
+        await axios.put(`http://127.0.0.1:8000/lotes/${item.ID}/`, item);
+        this.fetchMedicamentos(); // Refresca los datos
+      } catch (error) {
+        console.error('Error saving item:', error);
+      }
+    },
+    async deleteItem(id) {
+      if (confirm('¿Estás seguro de que quieres eliminar este lote?')) {
+        try {
+          const response = await axios.delete(`http://127.0.0.1:8000/lotes/${id}/`);
+          if (response.status === 204) { // 204 No Content indica éxito en la eliminación
+            this.fetchMedicamentos(); // Refresca los datos
+          } else {
+            console.error('Error deleting item: Unexpected response status', response.status);
+          }
+        } catch (error) {
+          console.error('Error deleting item:', error);
+        }
+      }
     },
     cancelEdit(item) {
       item.editing = false;
-    },
-    deleteItem(id) {
-      this.medicamentos = this.medicamentos.filter(item => item.id !== id);
+      this.fetchMedicamentos(); // Refresca los datos para descartar cambios no guardados
     }
   }
 };
 </script>
 
 <style scoped>
-/* Add your custom styles here */
+/* Agrega cualquier estilo adicional aquí */
 </style>
