@@ -29,7 +29,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in medicamentos" :key="item.ID" :class="getRowClass(item)">
+          <tr v-for="item in lotes" :key="item.ID" :class="getRowClass(item)">
             <td class="px-6 py-4">
               <span v-if="!item.editing">{{ item.Medicamento_ID }}</span>
               <input v-else v-model="item.Medicamento_ID" type="text" class="w-full border p-1 rounded" />
@@ -97,17 +97,17 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      medicamentos: []
+      lotes: []  // Cambiado de medicamentos a lotes
     };
   },
   mounted() {
-    this.fetchMedicamentos();
+    this.fetchLotes();  // Cambiado de fetchMedicamentos a fetchLotes
   },
   methods: {
-    async fetchMedicamentos() {
+    async fetchLotes() {  // Cambiado de fetchMedicamentos a fetchLotes
       try {
         const response = await axios.get('http://127.0.0.1:8000/lotes/');
-        this.medicamentos = response.data;
+        this.lotes = response.data;  // Cambiado de medicamentos a lotes
       } catch (error) {
         console.error('Error fetching lotes:', error);
       }
@@ -133,7 +133,7 @@ export default {
       item.Fecha_Actualizacion = new Date().toISOString(); // Actualiza la fecha de modificación
       try {
         await axios.put(`http://127.0.0.1:8000/lotes/${item.ID}/`, item);
-        this.fetchMedicamentos(); // Refresca los datos
+        this.fetchLotes();  // Cambiado de fetchMedicamentos a fetchLotes
       } catch (error) {
         console.error('Error saving item:', error);
       }
@@ -143,7 +143,7 @@ export default {
         try {
           const response = await axios.delete(`http://127.0.0.1:8000/lotes/${id}/`);
           if (response.status === 204) { // 204 No Content indica éxito en la eliminación
-            this.fetchMedicamentos(); // Refresca los datos
+            this.fetchLotes();  // Cambiado de fetchMedicamentos a fetchLotes
           } else {
             console.error('Error deleting item: Unexpected response status', response.status);
           }
@@ -154,7 +154,7 @@ export default {
     },
     cancelEdit(item) {
       item.editing = false;
-      this.fetchMedicamentos(); // Refresca los datos para descartar cambios no guardados
+      this.fetchLotes();  // Cambiado de fetchMedicamentos a fetchLotes
     }
   }
 };
