@@ -13,28 +13,28 @@
       </a>
     </div>
     <form class="flex items-center max-w-sm mx-auto mb-6">
-            <label for="simple-search" class="sr-only">Buscar</label>
-            <div class="relative w-full">
-                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M3 5v10M3 5a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm0 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm12 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm0 0V6a3 3 0 0 0-3-3H9m1.5-2-2 2 2 2" />
-                    </svg>
-                </div>
-                <input type="text" id="simple-search" v-model="searchQuery"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Buscar..." required />
-            </div>
-            <button type="button" @click="clearSearch"
-                class="p-2.5 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                </svg>
-                <span class="sr-only">Limpiar búsqueda</span>
-            </button>
-        </form>
+      <label for="simple-search" class="sr-only">Buscar</label>
+      <div class="relative w-full">
+        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+          <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3 5v10M3 5a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm0 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm12 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm0 0V6a3 3 0 0 0-3-3H9m1.5-2-2 2 2 2" />
+          </svg>
+        </div>
+        <input type="text" id="simple-search" v-model="searchQuery"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Buscar..." required />
+      </div>
+      <button type="button" @click="clearSearch"
+          class="p-2.5 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+        </svg>
+        <span class="sr-only">Limpiar búsqueda</span>
+      </button>
+    </form>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-6">
       <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -52,7 +52,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in lotes" :key="item.ID" :class="getRowClass(item)">
+          <tr v-for="item in filteredLotes" :key="item.ID" :class="getRowClass(item)">
             <td class="px-6 py-4">
               <span v-if="!item.editing">{{ item.Medicamento_ID }}</span>
               <input v-else v-model="item.Medicamento_ID" type="text" class="w-full border p-1 rounded" />
@@ -120,11 +120,22 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      lotes: []  // Cambiado de medicamentos a lotes
+      lotes: [],
+      searchQuery: ''  // Nueva propiedad para la búsqueda
     };
   },
   mounted() {
     this.fetchLotes();  // Cambiado de fetchMedicamentos a fetchLotes
+  },
+  computed: {
+    filteredLotes() {
+      const query = this.searchQuery.toLowerCase();
+      return this.lotes.filter(item => {
+        return Object.values(item).some(value =>
+          String(value).toLowerCase().includes(query)
+        );
+      });
+    }
   },
   methods: {
     async fetchLotes() {  // Cambiado de fetchMedicamentos a fetchLotes
@@ -172,29 +183,32 @@ export default {
       }
     },
     async deleteItem(id) {
-            try {
-                const url = `http://localhost:8000/lote/${id}`; // Actualiza la ruta aquí
-                const response = await fetch(url, {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                });
+      try {
+        const url = `http://localhost:8000/lote/${id}`; // Actualiza la ruta aquí
+        const response = await fetch(url, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
 
-                if (response.ok) {
-                    console.log(`Elemento con ID ${id} fue eliminado.`);
-                    await this.fetchLotes(); // Recargar datos después de eliminar
-                } else {
-                    const errorText = await response.text();
-                    console.error(`Error deleting item with ID ${id}: ${response.status} ${response.statusText} - ${errorText}`);
-                }
-            } catch (error) {
-                console.error('Error deleting item:', error);
-            }
-        },
+        if (response.ok) {
+          console.log(`Elemento con ID ${id} fue eliminado.`);
+          await this.fetchLotes(); // Recargar datos después de eliminar
+        } else {
+          const errorText = await response.text();
+          console.error(`Error deleting item with ID ${id}: ${response.status} ${response.statusText} - ${errorText}`);
+        }
+      } catch (error) {
+        console.error('Error deleting item:', error);
+      }
+    },
     cancelEdit(item) {
       item.editing = false;
       this.fetchLotes();  // Cambiado de fetchMedicamentos a fetchLotes
+    },
+    clearSearch() {
+      this.searchQuery = '';
     }
   }
 };
